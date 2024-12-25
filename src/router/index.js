@@ -80,9 +80,17 @@ const constantsRoutes = [
   { path: '*', redirect: '/404', hidden: true }
 ]
 
-const router = new Router({
+const createRouter = () => new Router({
   mode: 'history',
   base: process.env.BASE_URL,
   routes: constantsRoutes
 })
+const router = createRouter()
+
+// Detail see: https://github.com/vuejs/vue-router/issues/1234#issuecomment-357941465
+export function resetRouter() {
+  const newRouter = createRouter()
+  router.matcher = newRouter.matcher // reset router
+}
+
 export default router
